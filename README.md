@@ -2,7 +2,7 @@
 
 #### This is a simple to do application built with React
 
-<img src="https://user-images.githubusercontent.com/63863253/229272347-7dedc5f6-ba56-4e8d-a5cd-b56f7461bec9.png">
+<img src="https://user-images.githubusercontent.com/63863253/229272434-c3ab58c1-e931-4ca6-b073-48c90966e732.png">
 
 ## Features
 <ul>
