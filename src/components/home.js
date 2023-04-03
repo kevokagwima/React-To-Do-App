@@ -3,12 +3,19 @@ import React from "react";
 function Home() {
   const [tasks, updateTask] = React.useState([]);
   const [inputValue, setInput] = React.useState("");
+  const [inputStyle, setInputStyle] = React.useState("");
 
   const formSubmit = (e) => {
     e.preventDefault();
     if (inputValue) {
-      updateTask([...tasks, inputValue]);
-      setInput("");
+      if (tasks.includes(inputValue)) {
+        setInputStyle("2px solid red");
+        alert(`Input '${inputValue}' already exists`);
+      } else {
+        updateTask([...tasks, inputValue]);
+        setInput("");
+        setInputStyle("2px solid teal");
+      }
     }
     console.log(tasks);
   };
@@ -16,6 +23,19 @@ function Home() {
   const handleChange = (e) => {
     setInput(e.target.value);
     console.log("typing...");
+  };
+
+  const editTask = (index) => {
+    const oldTasks = [...tasks];
+    let newTask = prompt(`You're editing task '${oldTasks[index]}'.`);
+    if (newTask == null || newTask == "") {
+      alert("Input cannot be empty");
+    } else if (oldTasks.includes(newTask)) {
+      alert(`Input '${newTask}' already exists`);
+    } else {
+      oldTasks[index] = newTask;
+      updateTask(oldTasks);
+    }
   };
 
   const removeTask = (index) => {
@@ -26,7 +46,13 @@ function Home() {
 
   const task = tasks.map((i, index) => (
     <li key={index}>
-      {i} {""} <button onClick={() => removeTask(index)}>Remove</button>
+      {i} {""}
+      <div>
+        <button id="btn" onClick={() => editTask(index)}>
+          Edit
+        </button>{" "}
+        <button onClick={() => removeTask(index)}>Remove</button>
+      </div>
     </li>
   ));
 
@@ -36,6 +62,7 @@ function Home() {
       <hr />
       <form onSubmit={formSubmit}>
         <input
+          style={{ outline: inputStyle }}
           required
           value={inputValue}
           type="text"
